@@ -66,27 +66,51 @@ public class BigFraction {
   // +---------+------------------------------------------------------
   // | Methods |
   // +---------+
-/* input *ArbitraryBigFraction*.fractoint(*fraction you want reduced*)
-   * Reduce to number
+
+/* input First BigFraction . Calculate( Second BigFraction, Unicode # of which operation you want)
+   * Will add, subtract, multiply, and divide dep[ending on the operator number
+   * Assume: operator values = 42(*) 43(+) 45(-)  or 47(/)
    */
-  public BigInteger fractoint(BigFraction frac){
+
+public BigFraction Calculate (BigFraction scnd, int operator){
+  if(operator == 42){
+    scnd = this.multiply1(scnd);
+    }// if mult
+  else if (operator == 43){
+    scnd = this.add(scnd);
+    }// if add
+  else if (operator == 45){
+    scnd = this.subtract(scnd);
+    }//if subtract 
+  else {
+    scnd = this.divide(scnd);
+    }//if divide (operator == 47)
+  return scnd;
+}// calculate
+
+/*
+ * Will return a BigInteger representation of a BigFraction input
+ * Assumes: BigFraction.denom is 1 (Will not give complex #)
+ */
+
+public BigInteger fractoint(BigFraction frac){
     
     return frac.num.divide(denom);
-  }//fractioint
+}//fractioint
   /*
    * Reduce to smallest fractional form
    */
-   public BigFraction reduce(){
-    BigFraction reduced = new BigFraction(1,1);
-if(this.num.mod(this.denom) == BigInteger.valueOf(0)){
- reduced.num = this.num.divide(this.denom);
-} // if num = denom
+public BigFraction reduce(){
+  BigFraction reduced = new BigFraction(1,1);
+  if(this.num.mod(this.denom) == BigInteger.valueOf(0)){
+    reduced.num = this.num.divide(this.denom);
+    } // if num = denom
   else {
     BigInteger i = this.num.gcd(this.denom);
     reduced.num = this.num.divide(i);
     reduced.denom = this.denom.divide(i);
   }//if true fraction
-  return reduced;
+return reduced;
 }
     
    
@@ -97,13 +121,19 @@ if(this.num.mod(this.denom) == BigInteger.valueOf(0)){
   public double doubleValue() {
   return this.num.doubleValue() / this.denom.doubleValue();
   } // doubleValue()
-
-    public BigFraction multiply1(BigFraction mult1) {     
+/*
+ * Returns this BigFraction multiplied by second BigFraction
+ */
+  public BigFraction multiply1(BigFraction mult1) {     
         BigInteger numerator = (this.num.multiply(mult1.num));
         BigInteger denomenator = (this.denom.multiply(mult1.denom));
         return new BigFraction(numerator, denomenator);
 
     }//Muliply
+
+    /*
+    * Returns this BigFraction divided by second BigFraction
+    */
 
     public BigFraction divide(BigFraction div) {     
         BigInteger numerator = (this.num.multiply(div.denom));
@@ -112,8 +142,17 @@ if(this.num.mod(this.denom) == BigInteger.valueOf(0)){
 
     }//Divide
 
-
-
+/*
+ * Returns true if string input is a fraction or contains a fraction
+ * **Intended for single Tokens**
+ */
+    public Boolean isFrac(String str){
+        return (str.indexOf("/") > 0 );
+    }
+/*
+ * converts the (string) into a BigFraction
+ * Assumes: string contains only a fraction *see isFrac*
+ */
     public BigFraction toFraction(String string){
       BigFraction result = new BigFraction(1,1);
         int divisor = string.indexOf("/");
@@ -145,7 +184,7 @@ if(this.num.mod(this.denom) == BigInteger.valueOf(0)){
   }// add(Fraction)
 
   /**
-   * Add the fraction `addMe` to this fraction.
+   * subtract the fraction `addMe` from this fraction.
    */
 
   public BigFraction subtract(BigFraction subMe) {
@@ -182,9 +221,6 @@ if(this.num.mod(this.denom) == BigInteger.valueOf(0)){
     if (this.num.equals(BigInteger.ZERO)) {
       return "0";
     } // if it's zero
-    // Lump together the string represention of the numerator,
-    // a slash, and the string representation of the denominator
-    // return this.num.toString().concat("/").concat(this.denom.toString());
     return this.num + "/" + this.denom;
   } // toString()
 }
