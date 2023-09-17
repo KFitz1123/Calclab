@@ -3,7 +3,11 @@ import java.math.BigInteger;
 
 import java.lang.String ;
 
-
+/*
+ * Class: BigFraction
+ * Authors: Kevin Fitzgerald, significant contributions from Sam Bigham
+ * This class contains many small methods for the BigFraction construct
+ */
 
 public class BigFraction {
     // +------------------+---------------------------------------------

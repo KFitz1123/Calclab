@@ -1,7 +1,13 @@
-import java.io.PrintWriter;
+
 import java.util.Scanner;
 import java.lang.String ;
 
+/*
+ * Class: BFValculator
+ * Author:Kevin Fitzgerald
+ * This class provides an evaluation and a store function. valid inputs are are a string of fractions, specific commands, ints and chars
+ * 
+ */
 public class BFCalculator { 
   // +--------+-------------------------------------------------------
   // | Fields |
@@ -30,7 +36,6 @@ public BFCalculator(BigFraction[] str){
  */
   public BigFraction evaluate(String str) {
 
-    PrintWriter pen = new PrintWriter(System.out, true);
     Scanner eye = new Scanner(str);
     String temp = "";
     int operator = 0;
@@ -39,26 +44,26 @@ public BFCalculator(BigFraction[] str){
     BigFraction scndnum = new BigFraction(1,1);
     temp = eye.next();
     /* For First Token */
-    if ( ( 65 <= temp.codePointAt(0) && temp.codePointAt(0) <= 90) || ( 97 <= temp.codePointAt(0) && temp.codePointAt(0) <= 122)){
+
+     if ( ( 65 <= temp.codePointAt(0) && temp.codePointAt(0) <= 90) || ( 97 <= temp.codePointAt(0) && temp.codePointAt(0) <= 122)){
         temp = temp.toLowerCase();
         Object test1 = exp[temp.codePointAt(0) - 97];
-      if(test1 == test2){ //if location in registry is null
-        firstnum = new BigFraction(0,1);
-        }// if nothing STOREd
-      else{
-        firstnum = exp[(temp.codePointAt(0) - 97)];
-        }//else if location has something STOREd
-      }// if next token is a char, store
-    else {
-      firstnum = firstnum.toFraction(temp);
-  }// first argument in the string (first case)
+        if(test1 == test2){ //if location in registry is null
+          firstnum = new BigFraction(0,1);
+          }// if nothing STOREd
+        else{
+          firstnum = exp[(temp.codePointAt(0) - 97)];
+          }//else if location has something STOREd
+        }// if next token is a char, store
+      else {
+        firstnum = firstnum.toFraction(temp);
+        }// first argument in the string (first case)
 
-  /*For Each Subsequent Token Until There Are No More*/
-  while(eye.hasNext())
-  {
+    /*For Each Subsequent Token Until There Are No More*/
+    while(eye.hasNext()){
     
     temp = eye.next();
-    pen.println("for second temp read: " + temp);
+
     if ( ( 65 <= temp.codePointAt(0) && temp.codePointAt(0) <= 90) || ( 97 <= temp.codePointAt(0) && temp.codePointAt(0) <= 122)){
       temp = temp.toLowerCase();
       Object test1 = exp[temp.codePointAt(0) - 97];
@@ -79,7 +84,6 @@ public BFCalculator(BigFraction[] str){
      // two cases - either toFraction or its an operator 42 43 45 57
       scndnum = firstnum.toFraction(temp);
       firstnum = firstnum.Calculate(scndnum, operator);
-      pen.println("Firstnum post calculation is : " + firstnum.toString() + "\n");
     }// if not an operator or character (We assume this means it is either an int or a fraction)
   }// While eye.next() == true
   eye.close();
@@ -88,13 +92,7 @@ return firstnum;
 }//evaluate
 
 public void store(char register){
-  exp[register - 97];
-  }//store(char)
-  // +------------------+---------------------------------------------
-  // | (static) Methods |
-  // +------------------+
-  
+  exp[register - 97] = last;
+  }//store(char)   
 
-  
-    
 }//BFCalculator
