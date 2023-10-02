@@ -26,10 +26,9 @@ public class  QuickCalculator {
     Scanner eye = new Scanner(args[i]);
     eye.next();
     String rstring = eye.next();
-    pen.println(rstring);
     char register = (char) rstring.codePointAt(0);
-    pen.println(register);
     it.store(register);
+    pen.println("stored succesffully in" + rstring);
     eye.close();
   }// if command is to store
 else {
